@@ -1,0 +1,22 @@
+# https://taskfile.dev
+version: "3"
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - echo "Marvin"
+      - task -l
+
+  help:
+    silent: true
+    desc: Show this help message
+    cmds:
+      - task --list
+
+  docs:serve:
+    silent: true
+    dir: docs
+    desc: "Run docs locally in serve mode"
+    cmds:
+      - bun run docs:dev

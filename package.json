@@ -1,0 +1,6 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "vitepress-plugin-llms": "^1.10.0"
+  }
+}
