@@ -22,7 +22,4 @@ This file provides guidance to AI coding agents like Claude Code (claude.ai/code
 
 Best practices:
 
-* Good rules are focused, actionable, and scoped.
-* Keep rules under 500 lines
-* Avoid vague guidance. Write rules like clear internal docs
-* Reuse rules when repeating prompts in chat
+

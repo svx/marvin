@@ -1,0 +1,88 @@
+{
+  "checker": "vale",
+  "timestamp": "2026-01-01T14:15:14.789Z",
+  "path": "/docs",
+  "summary": {
+    "total_files": 50,
+    "files_with_issues": 2,
+    "total_issues": 8,
+    "error_count": 1,
+    "warning_count": 4,
+    "info_count": 2
+  },
+  "issues": [
+    {
+      "file": "docs/file-1.md",
+      "line": 20,
+      "column": 31,
+      "severity": "info",
+      "message": "Sample issue message 1",
+      "rule": "Rule.vale.1",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-2.md",
+      "line": 97,
+      "column": 21,
+      "severity": "warning",
+      "message": "Sample issue message 2",
+      "rule": "Rule.vale.2",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-3.md",
+      "line": 92,
+      "column": 9,
+      "severity": "info",
+      "message": "Sample issue message 3",
+      "rule": "Rule.vale.3",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-4.md",
+      "line": 92,
+      "column": 8,
+      "severity": "info",
+      "message": "Sample issue message 4",
+      "rule": "Rule.vale.4",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-5.md",
+      "line": 59,
+      "column": 10,
+      "severity": "info",
+      "message": "Sample issue message 5",
+      "rule": "Rule.vale.5",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-6.md",
+      "line": 31,
+      "column": 53,
+      "severity": "warning",
+      "message": "Sample issue message 6",
+      "rule": "Rule.vale.6",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-7.md",
+      "line": 16,
+      "column": 49,
+      "severity": "warning",
+      "message": "Sample issue message 7",
+      "rule": "Rule.vale.7",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-8.md",
+      "line": 66,
+      "column": 73,
+      "severity": "warning",
+      "message": "Sample issue message 8",
+      "rule": "Rule.vale.8",
+      "context": "This is sample context for the issue."
+    }
+  ],
+  "metadata": {}
+}

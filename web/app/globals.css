@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: #ffffff;
+    --color-foreground: #0a2540;
+    --color-border: #e3e8ee;
+    --color-muted: #697386;
+    
+    --spacing-section: 4rem;
+    --spacing-card: 1.5rem;
+    
+    --radius-card: 6px;
+    --radius-button: 6px;
+    
+    --shadow-card: 0 2px 4px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-stripe border border-border shadow-stripe;
+  }
+
+  .card-hover {
+    @apply transition-shadow duration-200 hover:shadow-stripe-lg;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-stripe font-medium transition-colors duration-150;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200;
+  }
+}

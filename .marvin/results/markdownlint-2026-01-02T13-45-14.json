@@ -1,0 +1,106 @@
+{
+  "checker": "markdownlint",
+  "timestamp": "2026-01-02T13:45:14.789Z",
+  "path": "/docs",
+  "summary": {
+    "total_files": 50,
+    "files_with_issues": 4,
+    "total_issues": 12,
+    "error_count": 2,
+    "warning_count": 6,
+    "info_count": 3
+  },
+  "issues": [
+    {
+      "file": "docs/file-1.md",
+      "line": 74,
+      "column": 25,
+      "severity": "info",
+      "message": "Sample issue message 1",
+      "rule": "Rule.markdownlint.1",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-2.md",
+      "line": 76,
+      "column": 28,
+      "severity": "error",
+      "message": "Sample issue message 2",
+      "rule": "Rule.markdownlint.2",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-3.md",
+      "line": 64,
+      "column": 66,
+      "severity": "error",
+      "message": "Sample issue message 3",
+      "rule": "Rule.markdownlint.3",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-4.md",
+      "line": 67,
+      "column": 20,
+      "severity": "warning",
+      "message": "Sample issue message 4",
+      "rule": "Rule.markdownlint.4",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-5.md",
+      "line": 34,
+      "column": 77,
+      "severity": "info",
+      "message": "Sample issue message 5",
+      "rule": "Rule.markdownlint.5",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-6.md",
+      "line": 48,
+      "column": 65,
+      "severity": "error",
+      "message": "Sample issue message 6",
+      "rule": "Rule.markdownlint.6",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-7.md",
+      "line": 36,
+      "column": 73,
+      "severity": "error",
+      "message": "Sample issue message 7",
+      "rule": "Rule.markdownlint.7",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-8.md",
+      "line": 41,
+      "column": 3,
+      "severity": "error",
+      "message": "Sample issue message 8",
+      "rule": "Rule.markdownlint.8",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-9.md",
+      "line": 67,
+      "column": 28,
+      "severity": "info",
+      "message": "Sample issue message 9",
+      "rule": "Rule.markdownlint.9",
+      "context": "This is sample context for the issue."
+    },
+    {
+      "file": "docs/file-10.md",
+      "line": 71,
+      "column": 76,
+      "severity": "error",
+      "message": "Sample issue message 10",
+      "rule": "Rule.markdownlint.10",
+      "context": "This is sample context for the issue."
+    }
+  ],
+  "metadata": {}
+}
