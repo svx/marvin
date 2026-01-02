@@ -9,7 +9,8 @@
 ## Design
 
 - Letting the TUI be a pure viewer
-- Designing data models with a future frontend (Next.JS) in mind
+- Designing data models with a future frontend (Next.js) in mind
 - We will add more commands and QA checks in the future, the structure must be unified and effortless to extend
 - JSON output files must be placed in a dedicated directory
 - The CLI must check if the application that is called for checks, for example `vale` or `markdownlint` is installed via `brew` or as part of the project via the package.json file
+- For every command a new file under `cmd` must be created, for example `vale.go` or `help.go`
