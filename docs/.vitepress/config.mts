@@ -26,10 +26,31 @@ export default defineConfig({
       { text: "Examples", link: "/markdown-examples" },
     ],
 
+    search: {
+      provider: 'local'
+    },
+
     sidebar: [
       {
-        text: "Development",
-        items: [{ text: "CLI", link: "/develop/cli/project-layout" }],
+        text: 'Installation',
+        link: 'installation'
+        },
+        {
+        text: 'Getting Started',
+        link: 'getting-started'
+        },
+      {
+        text: "Reference",
+        items: [{ text: "CLI", link: "/reference/cli" }],
+      },
+      {
+        text: "Contributing",
+        collapsed: true,
+        items: [
+          { text: "CLI", link: "/contribute/cli/index" },
+          { text: "Web App", link: "/contribute/web/index" },
+          { text: "Documentation", link: "/contribute/docs/index" }
+        ],
       },
       {
         text: "Examples",
