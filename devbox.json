@@ -3,7 +3,8 @@
   "packages": [
     "bun@latest",
     "go-task@latest",
-    "go@1.25.4"
+    "go@1.25.4",
+    "markdownlint-cli2@latest"
   ],
   "shell": {
     "init_hook": [

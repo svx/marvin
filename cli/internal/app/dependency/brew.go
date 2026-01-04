@@ -25,17 +25,37 @@ func (d *BrewDetector) IsInstalled(tool string) (bool, string, error) {
 	cmd = exec.Command("brew", "--prefix", tool)
 	output, err := cmd.Output()
 	if err != nil {
-		return true, tool, nil // Installed but can't get path, return tool name
+		// Can't get prefix, try to find the actual executable in PATH
+		// For markdownlint-cli package, the executable is just "markdownlint"
+		actualTool := tool
+		if tool == "markdownlint-cli" || tool == "markdownlint-cli2" {
+			actualTool = "markdownlint"
+		}
+		if path, err := exec.LookPath(actualTool); err == nil {
+			return true, path, nil
+		}
+		return true, tool, nil
 	}
 
 	// The binary is typically in prefix/bin/tool
 	prefix := strings.TrimSpace(string(output))
-	path := prefix + "/bin/" + tool
+	
+	// For markdownlint-cli package, the executable is just "markdownlint"
+	binaryName := tool
+	if tool == "markdownlint-cli" || tool == "markdownlint-cli2" {
+		binaryName = "markdownlint"
+	}
+	
+	path := prefix + "/bin/" + binaryName
 	
 	// Verify the binary exists
 	if _, err := exec.LookPath(path); err != nil {
-		// Fall back to just the tool name (will be found in PATH)
-		return true, tool, nil
+		// Try to find the actual executable in PATH
+		if actualPath, err := exec.LookPath(binaryName); err == nil {
+			return true, actualPath, nil
+		}
+		// Fall back to just the binary name (will be found in PATH)
+		return true, binaryName, nil
 	}
 	
 	return true, path, nil
