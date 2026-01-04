@@ -68,6 +68,8 @@ func showMainHelp() {
 		desc string
 	}{
 		{"vale", "Run Vale prose linting on documentation"},
+		{"markdownlint", "Run markdownlint on Markdown files"},
+		{"dashboard", "View aggregated results from all checks"},
 		{"help", "Help about any command"},
 	}
 
@@ -93,6 +95,12 @@ func showMainHelp() {
 	fmt.Println(sectionStyle.Render("Examples:"))
 	fmt.Println("  # Run Vale on default docs/ directory")
 	fmt.Println("  marvin vale")
+	fmt.Println()
+	fmt.Println("  # Run markdownlint on default docs/ directory")
+	fmt.Println("  marvin markdownlint")
+	fmt.Println()
+	fmt.Println("  # View dashboard with all check results")
+	fmt.Println("  marvin dashboard")
 	fmt.Println()
 	fmt.Println("  # Run Vale on specific directory")
 	fmt.Println("  marvin vale ./content")

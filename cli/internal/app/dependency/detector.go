@@ -32,6 +32,36 @@ func NewMultiDetector() *MultiDetector {
 
 // IsInstalled checks if a tool is installed using multiple detection methods
 func (d *MultiDetector) IsInstalled(tool string) (bool, string, error) {
+	// Special handling for markdownlint - try multiple variants
+	if tool == "markdownlint" {
+		// Try markdownlint-cli2 first (preferred, faster version)
+		for _, detector := range d.detectors {
+			installed, path, err := detector.IsInstalled("markdownlint-cli2")
+			if err == nil && installed {
+				return true, path, nil
+			}
+		}
+		
+		// Fall back to markdownlint-cli
+		for _, detector := range d.detectors {
+			installed, path, err := detector.IsInstalled("markdownlint-cli")
+			if err == nil && installed {
+				return true, path, nil
+			}
+		}
+		
+		// Try just "markdownlint" binary
+		for _, detector := range d.detectors {
+			installed, path, err := detector.IsInstalled("markdownlint")
+			if err == nil && installed {
+				return true, path, nil
+			}
+		}
+		
+		return false, "", nil
+	}
+	
+	// Standard detection for other tools
 	for _, detector := range d.detectors {
 		installed, path, err := detector.IsInstalled(tool)
 		if err != nil {
@@ -59,10 +89,15 @@ func (d *MultiDetector) GetInstallInstructions(tool string) string {
 		instructions += "    npm install -g vale\n\n"
 		instructions += "  Manual:\n"
 		instructions += "    https://vale.sh/docs/vale-cli/installation/\n"
-	case "markdownlint", "markdownlint-cli":
+	case "markdownlint", "markdownlint-cli", "markdownlint-cli2":
 		instructions += "  npm (recommended):\n"
+		instructions += "    npm install -g markdownlint-cli2\n\n"
+		instructions += "  npm (alternative):\n"
 		instructions += "    npm install -g markdownlint-cli\n\n"
+		instructions += "  Homebrew:\n"
+		instructions += "    brew install markdownlint-cli\n\n"
 		instructions += "  Manual:\n"
+		instructions += "    https://github.com/DavidAnson/markdownlint-cli2\n"
 		instructions += "    https://github.com/igorshubovych/markdownlint-cli\n"
 	default:
 		instructions += fmt.Sprintf("  Please install %s and ensure it's in your PATH\n", tool)

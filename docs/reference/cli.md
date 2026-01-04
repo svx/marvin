@@ -156,7 +156,7 @@ Interactive terminal interface with:
 
 Example:
 ```
- Marvin - Vale Results 
+ Marvin - Vale Results
 
 Summary
   Path: docs/

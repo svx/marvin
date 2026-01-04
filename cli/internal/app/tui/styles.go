@@ -62,6 +62,23 @@ var (
 			BorderStyle(lipgloss.RoundedBorder()).
 			BorderForeground(lipgloss.Color("238")).
 			Padding(1, 2)
+
+	// Dashboard tab styles
+	tabStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("246")).
+			Padding(0, 2)
+
+	selectedTabStyle = lipgloss.NewStyle().
+				Bold(true).
+				Foreground(lipgloss.Color("99")).
+				Background(lipgloss.Color("235")).
+				Padding(0, 2)
+
+	// Dashboard card header style
+	cardHeaderStyle = lipgloss.NewStyle().
+			Bold(true).
+			Foreground(lipgloss.Color("212")).
+			MarginBottom(1)
 )
 
 // getSeverityStyle returns the appropriate style for a severity level

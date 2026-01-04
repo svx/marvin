@@ -121,3 +121,8 @@ Next.js-based dashboard (in development) where users can:
 2. **Go Conventions**: Files/directories starting with `.` or `_` are ignored by Go
 3. **Linting**: All Go code must pass `golangci-lint` checks
 4. **Future Extensibility**: The structure must support adding more QA checks and commands easily
+
+## Rules
+
+- To add a new command to the `cli` follow the `cli/README.md` file to make sure everything is consistent
+- If a new command is added to `cli/cmd` the `help.go` file in the same directory needs to be updated with the new command
