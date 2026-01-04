@@ -1,16 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Card, { CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import Badge from '@/components/ui/badge';
-import { fetchResultById } from '@/lib/api';
+import RunCheckButton from '@/components/ui/run-check-button';
+import { fetchResultById, fetchResults } from '@/lib/api';
 import { formatDate, groupIssuesByFile } from '@/lib/utils';
 import type { ResultWithId, Issue } from '@/lib/types';
 
 export default function CheckerDetailPage({ params }: { params: { checker: string } }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = searchParams.get('id');
   
   const [result, setResult] = useState<ResultWithId | null>(null);
@@ -66,6 +68,48 @@ export default function CheckerDetailPage({ params }: { params: { checker: strin
   const files = Object.keys(issuesByFile).sort();
   const displayIssues = selectedFile ? issuesByFile[selectedFile] : result.issues;
 
+  const handleCheckComplete = async () => {
+    // Reload to get the latest result for this checker
+    try {
+      const allResults = await fetchResults();
+      const latestResult = allResults
+        .filter(r => r.checker === result.checker)
+        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
+      
+      if (latestResult && latestResult.id !== result.id) {
+        // Navigate to the latest result
+        router.push(`/checks/${latestResult.checker}?id=${latestResult.id}`);
+      } else if (latestResult) {
+        // Same result, just reload the data
+        const updatedResult = await fetchResultById(latestResult.id);
+        setResult(updatedResult);
+      }
+    } catch (err) {
+      console.error('Failed to reload results:', err);
+    }
+  };
+
+  // Use the exact path from the result for re-running
+  // The CLI runs from cli/ directory, so we need to prepend ../ if the path doesn't already have it
+  const storedPath = result.path;
+  const rerunPath = storedPath.startsWith('../') || storedPath.startsWith('/') ? storedPath : `../${storedPath}`;
+  
+  // Extract a display name from the path
+  const getDisplayName = (path: string): string => {
+    // Remove ../ or / prefix for display
+    const cleanPath = path.replace(/^\.\.\//, '').replace(/^\//, '');
+    // If it's a file, show just the filename
+    if (cleanPath.endsWith('.md')) {
+      return cleanPath.split('/').pop() || cleanPath;
+    }
+    // If it's a directory, show the last directory name
+    return cleanPath.split('/').pop() || cleanPath;
+  };
+  
+  const displayName = getDisplayName(storedPath);
+  
+  console.log('Checker detail page:', { storedPath, rerunPath, displayName });
+
   return (
     <div className="container mx-auto px-6 py-8">
       {/* Header */}
@@ -73,10 +117,34 @@ export default function CheckerDetailPage({ params }: { params: { checker: strin
         <Link href="/checks" className="text-primary-600 hover:text-primary-700 text-sm mb-2 inline-block">
           ← Back to all checks
         </Link>
-        <h1 className="text-3xl font-bold text-foreground mb-2 capitalize">
-          {result.checker} Check Results
-        </h1>
-        <p className="text-muted">{formatDate(result.timestamp)}</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground mb-2 capitalize">
+              {result.checker} Check Results
+            </h1>
+            <p className="text-muted">{formatDate(result.timestamp)}</p>
+            <p className="text-sm text-muted mt-1">
+              Checked path: <code className="text-xs bg-gray-100 px-2 py-0.5 rounded">{result.path}</code>
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <RunCheckButton
+              checker={result.checker as 'vale' | 'markdownlint'}
+              onSuccess={handleCheckComplete}
+              variant="secondary"
+              size="sm"
+              path={rerunPath}
+              label={`Re-run (${displayName})`}
+            />
+            <RunCheckButton
+              checker={result.checker as 'vale' | 'markdownlint'}
+              onSuccess={handleCheckComplete}
+              variant="primary"
+              size="sm"
+              label="Check all docs"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Summary Stats */}

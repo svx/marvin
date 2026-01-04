@@ -116,9 +116,27 @@ func (c *MarkdownlintChecker) Check(ctx context.Context, opts CheckOptions) (*mo
 		output = stdout.Bytes()
 	}
 	
-	// If we still have no output, that's an error
+	// If we still have no output, that means no issues were found
 	if len(output) == 0 {
-		return nil, fmt.Errorf("markdownlint produced no output")
+		// Return empty result (no issues)
+		result := &models.Result{
+			Checker:   "markdownlint",
+			Timestamp: time.Now(),
+			Path:      opts.Path,
+			Summary: models.Summary{
+				TotalFiles:      0,
+				FilesWithIssues: 0,
+				TotalIssues:     0,
+				ErrorCount:      0,
+				WarningCount:    0,
+				InfoCount:       0,
+			},
+			Issues:   []models.Issue{},
+			Metadata: make(map[string]interface{}),
+		}
+		result.Metadata["config_file"] = c.configFile
+		result.Metadata["fix_enabled"] = c.fix
+		return result, nil
 	}
 	
 	// Check if output looks like JSON

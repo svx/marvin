@@ -1,0 +1,18 @@
+{
+  "checker": "vale",
+  "timestamp": "2026-01-04T11:13:07.843117+01:00",
+  "path": "docs/installation.md",
+  "summary": {
+    "total_files": 0,
+    "files_with_issues": 0,
+    "total_issues": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0
+  },
+  "issues": [],
+  "metadata": {
+    "config_file": "",
+    "min_alert_level": "suggestion"
+  }
+}

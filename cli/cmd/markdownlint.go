@@ -72,8 +72,50 @@ func runMarkdownlint(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("path does not exist: %s", path)
 	}
 
+	// Auto-detect config file if not specified
+	if markdownlintConfig == "" {
+		configFiles := []string{
+			".markdownlint.yaml",
+			".markdownlint.yml",
+			".markdownlint.json",
+			".markdownlintrc",
+		}
+		
+		// Search in current directory and parent directories
+		searchPaths := []string{
+			".",      // Current directory
+			"..",     // Parent directory (project root when running from cli/)
+			"../..",  // Grandparent directory (in case of deeper nesting)
+		}
+		
+		found := false
+		for _, searchPath := range searchPaths {
+			for _, configFile := range configFiles {
+				fullPath := searchPath + "/" + configFile
+				if searchPath == "." {
+					fullPath = configFile
+				}
+				
+				if _, err := os.Stat(fullPath); err == nil {
+					markdownlintConfig = fullPath
+					if verbose {
+						fmt.Printf("Auto-detected config file: %s\n", fullPath)
+					}
+					found = true
+					break
+				}
+			}
+			if found {
+				break
+			}
+		}
+	}
+
 	if verbose {
 		fmt.Printf("Scanning path: %s\n", path)
+		if markdownlintConfig != "" {
+			fmt.Printf("Using config file: %s\n", markdownlintConfig)
+		}
 	}
 
 	// 2. Check dependencies

@@ -1,0 +1,36 @@
+{
+  "checker": "markdownlint",
+  "timestamp": "2026-01-04T12:08:46.731485+01:00",
+  "path": "../docs/getting-started.md",
+  "summary": {
+    "total_files": 1,
+    "files_with_issues": 1,
+    "total_issues": 2,
+    "error_count": 2,
+    "warning_count": 0,
+    "info_count": 0
+  },
+  "issues": [
+    {
+      "file": "../docs/getting-started.md",
+      "line": 10,
+      "column": 0,
+      "severity": "error",
+      "message": "Fenced code blocks should be surrounded by blank lines",
+      "rule": "MD031",
+      "context": "```shell"
+    },
+    {
+      "file": "../docs/getting-started.md",
+      "line": 12,
+      "column": 3,
+      "severity": "error",
+      "message": "Files should end with a single newline character",
+      "rule": "MD047"
+    }
+  ],
+  "metadata": {
+    "config_file": "../.markdownlint.yaml",
+    "fix_enabled": false
+  }
+}

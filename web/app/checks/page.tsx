@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Card, { CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import Badge from '@/components/ui/badge';
+import RunCheckButton from '@/components/ui/run-check-button';
 import { fetchResults } from '@/lib/api';
 import { formatRelativeTime } from '@/lib/utils';
 import type { ResultWithId } from '@/lib/types';
@@ -11,6 +12,7 @@ import type { ResultWithId } from '@/lib/types';
 export default function AllChecksPage() {
   const [results, setResults] = useState<ResultWithId[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filterChecker, setFilterChecker] = useState<string>('all');
 
@@ -57,12 +59,46 @@ export default function AllChecksPage() {
   // Get unique checkers
   const checkers = Array.from(new Set(results.map(r => r.checker)));
 
+  const handleCheckComplete = async () => {
+    // Reload results after check completes
+    setRefreshing(true);
+    try {
+      const data = await fetchResults();
+      setResults(data);
+    } catch (err) {
+      console.error('Failed to reload results:', err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-6 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">All Checks</h1>
         <p className="text-muted">View and filter all documentation quality checks</p>
       </div>
+
+      {/* Run Checks Section */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Run Quality Checks Against All Docs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-4">
+            <RunCheckButton
+              checker="vale"
+              onSuccess={handleCheckComplete}
+              variant="primary"
+            />
+            <RunCheckButton
+              checker="markdownlint"
+              onSuccess={handleCheckComplete}
+              variant="primary"
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Filter Tabs */}
       <div className="mb-6 border-b border-border">
@@ -97,6 +133,32 @@ export default function AllChecksPage() {
       </div>
 
       {/* Results List */}
+      {refreshing && (
+        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-md flex items-center gap-2 text-blue-700">
+          <svg
+            className="animate-spin h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
+          <span>Refreshing results...</span>
+        </div>
+      )}
+      
       {filteredResults.length === 0 ? (
         <Card>
           <CardContent>

@@ -1,0 +1,28 @@
+{
+  "checker": "markdownlint",
+  "timestamp": "2026-01-04T11:51:44.375264+01:00",
+  "path": "../docs/getting-started.md",
+  "summary": {
+    "total_files": 1,
+    "files_with_issues": 1,
+    "total_issues": 1,
+    "error_count": 1,
+    "warning_count": 0,
+    "info_count": 0
+  },
+  "issues": [
+    {
+      "file": "../docs/getting-started.md",
+      "line": 7,
+      "column": 0,
+      "severity": "error",
+      "message": "Multiple top-level headings in the same document",
+      "rule": "MD025",
+      "context": "Getting Started"
+    }
+  ],
+  "metadata": {
+    "config_file": "",
+    "fix_enabled": false
+  }
+}
